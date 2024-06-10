@@ -1,0 +1,15 @@
+.Sticky-Header {
+    position: sticky;
+    top: 0;
+}
+
+footer {
+    border: 0px;
+}
+
+/* RadixUI /ShadcnUI CSS */
+
+.SeparatorRoot[data-orientation='horizontal'] {
+    height: 1px;
+    width: 100%
+}
