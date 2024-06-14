@@ -1,30 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
-import CheckoutForm from './CheckoutForm'
-import { Elements } from '@stripe/react-stripe-js'
-import { theme } from '../theme/themes'
 import { Box } from '@mui/material'
 
-const colors = theme.palette
-
-const appearance = {
-    theme: 'stripe',
-
-    variables: {
-        colorPrimary: colors.primary.main,
-        colorBackground: '#ffffff',
-        colorText: colors.text.primary,
-        colorDanger: colors.error.main,
-        fontFamily: 'Geist Variable',
-        spacingUnit: '5px',
-        borderRadius: '4px',
-    }
-};
+import CheckoutStepper from './CheckoutStepper'
 
 
 const Payment = () => {
     const [stripePromise, setStripePromise] = useState(null)
     const [clientSecret, setClientSecret] = useState("")
+    const [paymentId, setPaymentId] = useState("")
 
     useEffect(() => {
         fetch("http://localhost:5000/payment").then(async (res) => {
@@ -39,18 +23,17 @@ const Payment = () => {
             method: "POST",
             body: JSON.stringify({}),
         }).then(async (res) => {
-            var { clientSecret } = await res.json();
+            var { clientSecret, id } = await res.json();
 
+            setPaymentId(id)
             setClientSecret(clientSecret)
         })
     }, [])
+
+    const props = { stripePromise, clientSecret, paymentId }
     return (
         <Box>
-            {stripePromise && clientSecret && (
-                <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-                    <CheckoutForm />
-                </Elements>
-            )}
+            <CheckoutStepper {...props} />
         </Box>
     )
 }
