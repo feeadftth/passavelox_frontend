@@ -2,6 +2,7 @@ import PersonalForm from './PersonalForm'
 import CheckoutForm from './CheckoutForm'
 import { Elements } from '@stripe/react-stripe-js'
 import { theme } from '../theme/themes'
+import { Typography } from '@mui/material'
 
 const colors = theme.palette
 const appearance = {
@@ -26,7 +27,9 @@ const StepSwitch = ({ activeStep, paymentId, stripePromise, clientSecret }) => {
         case 0:
             return <PersonalForm paymentId={paymentId} />;
         case 1:
-            return "Ziopera";
+            return (<Typography variant='h1'>
+                Geolier Cafardo
+            </Typography>)
         case 2:
             return (
                 <>
